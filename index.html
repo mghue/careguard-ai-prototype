@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#08131d" />
+  <title>CareGuard AI — Caregiver Early-Warning Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">CG</span><div><strong>CareGuard</strong><small>AI CARE SYSTEM</small></div></div>
+      <nav>
+        <button class="nav-link active" data-target="dashboard"><span>⌂</span> Command Center</button>
+        <button class="nav-link" data-target="monitor"><span>◉</span> Live Monitoring</button>
+        <button class="nav-link" data-target="fast"><span>✚</span> FAST Screening</button>
+        <button class="nav-link" data-target="health"><span>♡</span> Health Data</button>
+        <button class="nav-link" data-target="alerts"><span>⚑</span> Alert Center</button>
+      </nav>
+      <div class="prototype-note"><span>Research prototype</span><p>Screening support only.<br>Not a medical device.</p></div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div><p class="eyebrow">PATIENT MONITORING</p><h1 id="page-title">Command Center</h1></div>
+        <div class="top-actions"><span class="system-online"><i></i> System online</span><button class="icon-button" id="privacy-btn" title="Privacy controls">◌</button></div>
+      </header>
+
+      <section id="dashboard" class="page active">
+        <div class="status-banner status-normal" id="status-banner">
+          <div class="status-icon" id="status-icon">✓</div>
+          <div><small>CURRENT STATUS</small><h2 id="status-title">No warning signs detected</h2><p id="status-subtitle">Monitoring is ready. Start the camera or choose a demonstration scenario.</p></div>
+          <div class="status-score"><small>EVIDENCE</small><strong id="confidence-value">—</strong></div>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel patient-card">
+            <div class="avatar">EM</div><div><small>MONITORED PERSON</small><h3>Eleanor Morgan</h3><p>Age 76 · Room 204</p></div>
+            <button class="small-button" data-target="health">Update vitals</button>
+          </article>
+          <article class="panel vital"><span class="vital-icon red">♥</span><div><small>BLOOD PRESSURE</small><strong id="bp-card">132/82</strong><p>mmHg · demo reading</p></div></article>
+          <article class="panel vital"><span class="vital-icon amber">◇</span><div><small>GLUCOSE</small><strong id="glucose-card">108</strong><p>mg/dL · demo reading</p></div></article>
+          <article class="panel vital"><span class="vital-icon teal">⌁</span><div><small>HEART RATE</small><strong id="heart-card">74</strong><p>bpm · simulated</p></div></article>
+        </div>
+
+        <div class="content-grid">
+          <article class="panel action-panel">
+            <div class="panel-heading"><div><small>QUICK ACTIONS</small><h3>Run a safety check</h3></div></div>
+            <div class="action-grid">
+              <button class="action-card" id="start-camera-action"><span>◉</span><strong>Start camera</strong><small>Live pose monitoring</small></button>
+              <button class="action-card" data-target="fast"><span>✚</span><strong>Run FAST test</strong><small>Face, arms and speech</small></button>
+              <button class="action-card danger-outline" id="request-help"><span>!</span><strong>Request help</strong><small>Notify a caregiver</small></button>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading"><div><small>RECENT EVENTS</small><h3>Activity timeline</h3></div><button class="text-button" data-target="alerts">View all</button></div>
+            <div id="event-list" class="event-list"><div class="empty-state">No events recorded in this session.</div></div>
+          </article>
+        </div>
+
+        <article class="panel demo-panel">
+          <div class="panel-heading"><div><small>PRESENTATION MODE</small><h3>Controlled demonstration scenarios</h3></div><span class="demo-badge">Synthetic</span></div>
+          <div class="scenario-row">
+            <button data-scenario="normal">Normal</button><button data-scenario="instability">Instability</button><button data-scenario="fall">Fall detected</button><button data-scenario="face">Face asymmetry</button><button data-scenario="arm">Arm drift</button><button data-scenario="multiple" class="scenario-danger">Multiple FAST signs</button>
+          </div>
+        </article>
+      </section>
+
+      <section id="monitor" class="page">
+        <div class="two-column wide-left">
+          <article class="panel camera-panel">
+            <div class="panel-heading"><div><small>LIVE VIDEO</small><h3>Privacy-aware pose monitoring</h3></div><span id="camera-state" class="pill neutral">Camera off</span></div>
+            <div class="video-stage">
+              <video id="camera" autoplay muted playsinline></video><canvas id="overlay"></canvas>
+              <div class="camera-placeholder" id="camera-placeholder"><span>◉</span><strong>Camera is disabled</strong><p>Video is processed locally in your browser.</p></div>
+              <div class="video-label">LIVE · LOCAL PROCESSING</div>
+            </div>
+            <div class="camera-controls"><button class="primary-button" id="camera-toggle">Start camera</button><button class="secondary-button" id="run-monitoring" disabled>Start monitoring</button></div>
+          </article>
+          <aside class="stack">
+            <article class="panel metric-list"><small>POSE EVIDENCE</small><div><span>Visibility</span><strong id="metric-visibility">—</strong></div><div><span>Trunk angle</span><strong id="metric-angle">—</strong></div><div><span>Hip velocity</span><strong id="metric-velocity">—</strong></div><div><span>Body position</span><strong id="metric-position">—</strong></div></article>
+            <article class="panel"><small>MODEL STATUS</small><h3 id="model-status">Loading MediaPipe…</h3><p id="model-detail" class="muted">Demo controls remain available if models cannot load.</p></article>
+          </aside>
+        </div>
+      </section>
+
+      <section id="fast" class="page">
+        <div class="section-intro"><p class="eyebrow">GUIDED ASSESSMENT</p><h2>FAST warning-sign screening</h2><p>This guided check looks for visible or audible warning signs. It does not diagnose stroke.</p></div>
+        <div class="fast-grid">
+          <article class="panel test-card" data-test="face"><span class="test-letter">F</span><h3>Face</h3><p>Ask the person to look forward and smile.</p><div class="test-result" id="face-result">Not tested</div><button class="secondary-button start-test" data-test="face">Start face test</button></article>
+          <article class="panel test-card" data-test="arms"><span class="test-letter">A</span><h3>Arms</h3><p>Raise both arms and hold for ten seconds.</p><div class="test-result" id="arms-result">Not tested</div><button class="secondary-button start-test" data-test="arms">Start arm test</button></article>
+          <article class="panel test-card" data-test="speech"><span class="test-letter">S</span><h3>Speech</h3><p>Repeat: “The sky is blue today.”</p><div class="test-result" id="speech-result">Not tested</div><button class="secondary-button start-test" data-test="speech">Start speech test</button></article>
+          <article class="panel test-card time-card"><span class="test-letter">T</span><h3>Time</h3><p>Multiple sudden signs require immediate human assessment.</p><div class="test-result emphasis" id="fast-summary">Awaiting tests</div><button class="primary-button" id="evaluate-fast">Evaluate evidence</button></article>
+        </div>
+        <div class="panel guided-message" id="guided-message"><span>i</span><p>Select a test to begin. Camera permission is required for face and arm checks; microphone permission is required for speech.</p></div>
+      </section>
+
+      <section id="health" class="page">
+        <div class="section-intro"><p class="eyebrow">HEALTH CONTEXT</p><h2>Patient measurements and risk factors</h2><p>These measurements provide background context only and cannot confirm an acute stroke.</p></div>
+        <form id="health-form" class="panel health-form">
+          <div class="form-grid">
+            <label>Age<input type="number" id="age" value="76" min="18" max="110"></label>
+            <label>Systolic BP<input type="number" id="systolic" value="132"></label>
+            <label>Diastolic BP<input type="number" id="diastolic" value="82"></label>
+            <label>Glucose (mg/dL)<input type="number" id="glucose" value="108"></label>
+            <label>Heart rate<input type="number" id="heart-rate" value="74"></label>
+            <label>SpO₂ (%)<input type="number" id="spo2" value="97"></label>
+          </div>
+          <div class="check-grid">
+            <label><input type="checkbox" id="hypertension" checked> Hypertension</label><label><input type="checkbox" id="diabetes"> Diabetes</label><label><input type="checkbox" id="afib"> Atrial fibrillation</label><label><input type="checkbox" id="previous-stroke"> Previous stroke/TIA</label><label><input type="checkbox" id="heart-disease"> Heart disease</label><label><input type="checkbox" id="smoking"> Current smoker</label>
+          </div>
+          <div class="form-footer"><button type="submit" class="primary-button">Update health context</button><div><small>DEMO CONTEXT SCORE</small><strong id="risk-score">Low</strong></div></div>
+        </form>
+      </section>
+
+      <section id="alerts" class="page">
+        <div class="section-intro"><p class="eyebrow">CAREGIVER WORKFLOW</p><h2>Alert Center</h2><p>Review, acknowledge and resolve safety events generated during this session.</p></div>
+        <article class="panel"><div class="panel-heading"><h3>Session alerts</h3><button class="secondary-button" id="test-alert">Send test alert</button></div><div id="alert-list" class="alert-list"><div class="empty-state">No caregiver alerts have been generated.</div></div></article>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal hidden" id="response-modal" role="dialog" aria-modal="true"><div class="modal-card"><span class="modal-alert">!</span><h2>Possible fall detected</h2><p>Are you okay?</p><strong id="countdown">15</strong><div><button class="secondary-button" id="im-okay">I am okay</button><button class="danger-button" id="need-help">Request help</button></div></div></div>
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
