@@ -27,13 +27,13 @@
     <main>
       <header class="topbar">
         <div><p class="eyebrow">PATIENT MONITORING</p><h1 id="page-title">Command Center</h1></div>
-        <div class="top-actions"><span class="system-online"><i></i> System online</span><button class="icon-button" id="privacy-btn" title="Privacy controls">◌</button></div>
+        <div class="top-actions"><span class="system-online" id="backend-state"><i></i> Connecting synthetic backend…</span><button class="icon-button" id="privacy-btn" title="Privacy controls">◌</button></div>
       </header>
 
       <section id="dashboard" class="page active">
         <div class="status-banner status-normal" id="status-banner">
           <div class="status-icon" id="status-icon">✓</div>
-          <div><small>CURRENT STATUS</small><h2 id="status-title">No warning signs detected</h2><p id="status-subtitle">Monitoring is ready. Start the camera or choose a demonstration scenario.</p></div>
+          <div><small>CURRENT STATUS</small><h2 id="status-title">No warning signs detected</h2><p id="status-subtitle">Connecting to the synthetic patient stream.</p><p id="last-update" class="status-time">Waiting for first reading…</p></div>
           <div class="status-score"><small>EVIDENCE</small><strong id="confidence-value">—</strong></div>
         </div>
 
@@ -45,6 +45,7 @@
           <article class="panel vital"><span class="vital-icon red">♥</span><div><small>BLOOD PRESSURE</small><strong id="bp-card">132/82</strong><p>mmHg · demo reading</p></div></article>
           <article class="panel vital"><span class="vital-icon amber">◇</span><div><small>GLUCOSE</small><strong id="glucose-card">108</strong><p>mg/dL · demo reading</p></div></article>
           <article class="panel vital"><span class="vital-icon teal">⌁</span><div><small>HEART RATE</small><strong id="heart-card">74</strong><p>bpm · simulated</p></div></article>
+          <article class="panel vital"><span class="vital-icon teal">○</span><div><small>SpO₂</small><strong id="spo2-card">97</strong><p>% · simulated</p></div></article>
         </div>
 
         <div class="content-grid">
@@ -64,9 +65,10 @@
         </div>
 
         <article class="panel demo-panel">
-          <div class="panel-heading"><div><small>PRESENTATION MODE</small><h3>Controlled demonstration scenarios</h3></div><span class="demo-badge">Synthetic</span></div>
+          <div class="panel-heading"><div><small>LIVE SYNTHETIC STREAM</small><h3>Heart-rate trend and controlled scenarios</h3></div><span class="demo-badge">Synthetic</span></div>
+          <div class="trend-wrap"><canvas id="vital-chart" aria-label="Synthetic heart-rate trend"></canvas></div>
           <div class="scenario-row">
-            <button data-scenario="normal">Normal</button><button data-scenario="instability">Instability</button><button data-scenario="fall">Fall detected</button><button data-scenario="face">Face asymmetry</button><button data-scenario="arm">Arm drift</button><button data-scenario="multiple" class="scenario-danger">Multiple FAST signs</button>
+            <button data-scenario="normal">Normal</button><button data-scenario="instability">Instability</button><button data-scenario="fall">Fall detected</button><button data-scenario="face">Face asymmetry</button><button data-scenario="arm">Arm drift</button><button data-scenario="multiple" class="scenario-danger">Multiple FAST signs</button><button id="reset-demo">Reset session</button>
           </div>
         </article>
       </section>
